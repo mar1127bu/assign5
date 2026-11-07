@@ -19,7 +19,7 @@ rf_monthly = 0.0025  # 0.25% per month
 
 # Download monthly stock price data for the past 5 years
 data = yf.download(ticker, period='5y', interval='1mo')
-close_prices = data['Close'][ticker]
+close_prices = data['Close'].squeeze()
 
 # Calculate monthly returns
 monthly_returns = close_prices.pct_change().dropna()
@@ -32,11 +32,11 @@ std_dev_return = monthly_returns.std()
 # Calculate the Monthly Sharpe Ratio
 monthly_sharpe_ratio = mean_excess_return / std_dev_return
 
-if not monthly_sharpe_ratio.empty:
+if pd.notna(monthly_sharpe_ratio):
   # Calculate the Sharpe ratio
   print()
   print()
-  print(f"Ticker: {ticker}")
-  print(f"Monthly Sharpe Ratio: {monthly_sharpe_ratio:.3f}")
+  st.write(f"Ticker: {ticker}")
+  st.metric("Monthly Sharpe Ratio", f"{monthly_sharpe_ratio:.3f}")
 else:
   st.error("No data found for MSFT.")
