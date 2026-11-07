@@ -9,6 +9,7 @@ Original file is located at
 
 import yfinance as yf
 import streamlit as st
+import pandas as pd
 
 # Fetches 5 years of AAPL data and prints the final overall average closing price.
 st.title("MSFT Sharpe Ratio")
